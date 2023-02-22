@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx1lOxIl4pzUNu9zsMMhdK1KfNwFZiizS1lA&usqp=CAU);
+            background-size: cover;
+         
+            color: rgba(229, 255, 0, 0.752);
+        }
+
+        #result {
+            color: rgba(206, 139, 23, 0.865);
+            font-family: cursive;
+            font-size: 15px;
+        };
+        .input{
+
+            border-radius: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+
+    <form onsubmit="getWeather(); return false">
+        <div class="head">
+            <h2>Weather app</h2>
+            <label class="input"> City : </label> <input class="input" required type="text" id="cityName" placeholder="Enter a city name">
+            <button type="submit"> Get Weather</button>
+        </div>
+    </form>
+    <br>
+    <div id="result">
+        <div>
+            <span>name : </span>
+            <span id="name"></span>
+        </div>
+        <div>
+            <span>temperature : </span>
+            <span id="temperature"></span>
+        </div>
+        <div>
+            <span>humidity : </span>
+            <span id="humidity"></span>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script>
+        let name = document.getElementById("name");
+        let temperature = document.getElementById("temperature");
+        let humidity = document.getElementById("humidity");
+        console.log(name, humidity, temperature)
+        function getWeather() {
+
+            let cityName = document.getElementById("cityName").value
+            console.log(cityName)
+
+
+            axios.get(`https://api.weatherapi.com/v1/current.json?key=d8d69f9c4afe469eb91181454232202&q=${cityName}&aqi=no
+`)
+                .then(function (response) {
+                    let WeatherData = response.data;
+                    name.innerHTML = WeatherData.location.name
+                    temperature.innerHTML = WeatherData.current.feelslike_c + "°C";
+                    console.log(WeatherData.current.feelslike_c)
+                    humidity.innerHTML = WeatherData.current.humidity + "%"
+                    console.log(WeatherData);
+                    console.log(WeatherData.location.name);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+                });
+
+            // document.write("Name :", WeatherData.location.name)
+        }
+        // function getData() {
+        //     let resultDiv = document.getElementById("result");
+        //     console.log(resultDiv);
+        //     resultDiv.innerText = WeatherData
+        //         .location.name
+            // let div = resultDiv.appendChild("div")
+            // let text = document.createTextNode(WeatherData.location.name);
+            // let cityName = document.createTextNode
+
+            //     console.log(resultDiv)
+        // }
+
+    </script>
+</body>
+
+</html>
